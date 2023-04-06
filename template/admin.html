@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Edit Data</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css" integrity="sha512-HqxHUkJM0SYcbvxUw5P60SzdOTy/QVwA1JJrvaXJv4q7lmbDZCmZaqz01UPOaQveoxfYRv1tHozWGPMcuTBuvQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src = "helper.js"></script>
+	<link rel = "stylesheet" href = "styles.css">
+    <link rel="icon" type="image/x-icon" href="pencil-square.svg">
+</head>
+<body>
+    <!--section class = "hero is-link is-small is-fullhd" style = "background-color:#007bff;"-->
+        <nav class="navbar navbar-expand-xl bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+              </span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+              
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                  <a class="nav-link" href="{{url_for('index')}}"><i class="bi bi-house-fill"></i>&nbsp;&nbsp;Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#"><i class="bi bi-person-square"></i>&nbsp;&nbsp;{{userdata.username}}<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a id = "btnDownloadData" class="nav-link" href="#"><i class="bi bi-cloud-download">&nbsp;&nbsp;</i>Download Table</a>
+                </li>
+                <li class="nav-item">
+                    <a id = "btnViewCount" class="nav-link" href="#"><i class="bi bi-eye">&nbsp;&nbsp;</i>View Count</a>
+                </li>
+                <li class="nav-item">
+                    <a id = "btnShowLeaderboard" class="nav-link" href="{{url_for('stats')}}"><i class="bi bi-bar-chart">&nbsp;&nbsp;</i>Leaderboard</a>
+                </li>
+                <li class="nav-item">
+                    <a id = "btnDeleteAccount" class="nav-link" href="#"><i class="bi bi-trash">&nbsp;&nbsp;</i>Delete Account</a>
+                </li>
+              </ul>
+              <form class="form-inline my-2 my-lg-0">
+                <a href = "{{url_for('logout')}}"><button class="btn btn-warning btn-sm" type ="button">Sign Out</button></a>
+              </form>
+            </div>
+          </nav>
+    <!--/section-->
+
+    <!--section class="hero is-link is-fullheight" style = "justify-content: flex-start;"-->
+    <div class = "container-fluid"><!--Container-->
+        <div class = "row"><!--First Row-->
+            <div class = "col-sm" id = "divPanel"><!--First Column-->
+                <div style = "display:flex; flex-direction:column;justify-content:space-evenly;" style = "background-color: white;">
+                    <div>
+                        <h4 id= "mainHeading" style = "margin-bottom: 10px;">Update Records</h4>
+                    </div>
+                    <div class = "btnContainer">
+                        <button
+                            id = "btnShowAddRecordModal"
+                            type = "button"
+                            class="btn btn-primary btn-sm"
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Add an individual entry to the records.">Add Record</button>
+                        &nbsp;
+                        <button
+                            id = "btnUpdateRecord"
+                            type="button"
+                            class="btn btn-primary btn-sm"
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Save changes made to table entries."
+                            onclick = "updateFields()">Save Changes</button>
+                        &nbsp;
+                        <button
+                            id = "btnAddFile"
+                            type="button"
+                            class="btn btn-primary btn-sm"
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Upload a file for bulk data entry."
+                            onclick="AddFile()">Add from File</button>
+                        &nbsp;
+                        <button
+                            id = "btndeleteRecord"
+                            type="button"
+                            class="btn btn-warning btn-sm"
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Select entries to delete by ticking the checkboxes in the table entries."
+                            onclick = "confirmDelete()" >Delete Entries</button>
+                    </div>
+                </div>
+                <!--div class = "bd-snippet"-->
+                    <nav class="panel">
+                        <div class = "teacherNameField">
+                            <span class = "text-muted">Teacher Name:</span>
+                            <input
+                                id = "inputTeacherName"
+                                type = "text"
+                                class = "form-control"
+                                style = "width:300px; font-weight: bold;">
+                            <button
+                                id = "btnChangeName"
+                                type = "button"
+                                class = "btn btn-outline-primary"
+                                data-toggle="tooltip"
+                                data-placement="right"
+                                title="Change name to be displayed in dashboard.">Change</button>
+                        </div>
+
+                        <div style = "padding-left:10px;padding-bottom:5px;">
+                            <span class = "text-muted">Currently Editing:</span>
+                            <div class="input-append btn-group">
+                                <input
+                                    name = "subject"
+                                    class="span2 form-control"
+                                    style = "padding-right:10px; font-weight: bold;"
+                                    id="inputSubjectPanel"
+                                    size="30"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Set subject to edit. Use dropdown menu to change."
+                                    type="text" required readonly placeholder="Select subject to edit">
+                                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#" style = "color:white;">
+                                    <span class="caret"></span>
+                                </a>
+                                <!--input type = "number" style = "display: none;" id = "inputSubjectId"-->
+                                <ul class="dropdown-menu" id = "listCodesPanel">
+                                    {% for row in subjects_handled %}
+                                        <div class = "indentlist" style = "word-wrap:break-word;"
+                                            data-subject_id = "{{row.subject_id}}"
+                                            data-school_year = "{{row.school_year}}"
+                                            data-subject_name = "{{row.subject_name}}"
+                                            data-role = "dropdown_subject_row">
+                                            <small data-subject_id = "{{row.subject_id}}"
+                                                data-school_year = "{{row.school_year}}"
+                                                data-subject_name = "{{row.subject_name}}">
+                                                {{row.subject_name}}&nbsp;
+                                            </small>
+
+                                            <small class = "text-muted"
+                                                data-subject_id = "{{row.subject_id}}"
+                                                data-school_year = "{{row.school_year}}"
+                                                data-subject_name = "{{row.subject_name}}">
+                                                    ({{row.school_year}})&nbsp;
+                                            </small>
+                                            <hr style = "padding-right:5px;"/>
+                                        </div>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <hr/>
+                        <p class = "titleWithBg">Add Subject</p>
+                        <div class = "addSubjectField">
+                            <input id = "subjectName" type = "text" class = "form-control" placeholder="Subject Name">
+                            <input id = "subjectSchoolYear" type = "text" class = "form-control" placeholder="School Year (eg. 2022-2023)"> 
+                            <i
+                                class="bi bi-plus-circle-fill"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Add a subject." 
+                                onclick="validateAddSubject()"></i>
+                        </div>
+
+                        <p class="panel-heading">
+                            <i class="bi bi-book"></i>&nbsp;&nbsp;Data Profile
+                        </p>
+                        <!--div class="panel-block">
+                          <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Search">
+                            <span class="icon is-left">
+                              <i class="fas fa-search" aria-hidden="true"></i>
+                            </span>
+                          </p>
+                        </div-->
+                        <p class="panel-tabs" id = "panelSwitcher">
+                          <a
+                            class="is-active"
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Edit subjects."
+                            id = "subjectPanel">Subjects</a>
+
+                          <a
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Edit section and exam names."
+                            id = "sectionPanel">Sections</a>
+                          <!--<a id = "examPanel">Exams</a>-->
+                        </p>
+                        <div class = "subjects-scroll" id = "panelScroller">
+                            {% for row in subjects_handled %}
+                            <div class = "addSubjectField" data-id = "{{row.subject_id}}" data-role = "subject_row">
+                                <input
+                                    data-id = "{{row.subject_id}}"
+                                    data-field = "subject_name"
+                                    data-role = "name"
+                                    type = "text"
+                                    class = "form-control"
+                                    placeholder="Subject Name"
+                                    value = "{{row.subject_name}}">
+                                <input
+                                    data-id = "{{row.subject_id}}"
+                                    data-field = "school_year"
+                                    data-role = "school_year"
+                                    type = "text"
+                                    class = "form-control"
+                                    placeholder="School Year (eg. 2022-2023)"
+                                    value = "{{row.school_year}}">
+                                <input
+                                    data-id = "{{row.subject_id}}"
+                                    data-field = "access_key"
+                                    data-role = "access_key"
+                                    type = "password"
+                                    oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                    class = "form-control"
+                                    placeholder="Access Key"
+                                    value = "{{row.pin}}">
+                                <i
+                                    class="bi bi-pencil-square"
+                                    data-id = "{{row.subject_id}}"
+                                    data-purpose = "update"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Save changes."></i>
+                                <i
+                                    class="bi bi-trash3-fill"
+                                    data-id = "{{row.subject_id}}"
+                                    data-purpose = "delete"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Delete subject."></i>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="panel-block" style = "height:20px;"></div>
+                      </nav>
+                <!--/div-->
+            </div><!--First Column-->
+            <div class = "col-xl-8"><!--Second Column-->
+    
+
+    <div class="centerdiv" style="margin-top:5px;margin-bottom:5px;">
+        <div class = "row">
+            <div class = "centerdiv" style = "width:85vh;" id = "filterRecord">
+                <span class = "spandesc">Page</span>
+                <input name = "pageStartIndex" type='number' class='txtedit entryinput' value= 1 id="pageStart">
+                <span class = "spandesc"><span id = "textNumPage">of 50</span>&nbsp;&nbsp;&nbsp;&vert;&nbsp;&nbsp;&nbsp;Entries per Page:</span>
+                <input name = "rowsPerPage" type='number' class='txtedit entryinput' value= 50 id="pageDx">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div class = "centerDiv" id = "filterDropDowns">
+                    <ul class="nav">
+                        <li class="nav-item dropdown">
+                            <a id = "filterSectionLabel" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Section</a>
+                            <div class="dropdown-menu dropdown-scroll" id = "filterSection">
+                                <div class = "indentlist"><input type = "checkbox" name = "all_sections" onchange="selectAllSections()" checked><span>All</span></div>
+                                {% for sec in section_list %}
+                                    <div class = "indentlist"><input type = "checkbox" name = "{{ sec }}"><span>{{sec}}</span></div>
+                                {% endfor %}
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a  id = "filterExamLabel" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Exam Code</a>
+                            <div class="dropdown-menu dropdown-scroll" id = "filterExam">
+                                <div class = "indentlist"><input type = "checkbox" name = "all_codes" onchange = "selectAllExams()" checked><span>All</span></div>
+                                {% for code in exam_codes %}
+                                    <div class = "indentlist"><input type = "checkbox" name = "{{ code }}"><span>{{code}}</span></div>
+                                {% endfor %}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <button
+                    id = "btngotoPage"
+                    type="button"
+                    class="btn btn-outline-primary btn-sm"
+                    data-toggle="tooltip"
+                    data-placement="right"
+                    title="Submit filter data."
+                    onclick="gotoPage()">Submit</button>
+                &nbsp;&nbsp;&nbsp;
+            </div>
+        </div>
+    </div>
+
+    <div classs = "centerDiv">
+        <div class = "centerPaginator">
+            <nav>
+                <ul id = "pageSwitcher" class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous" id = "switchFirstPage">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#" id = "switchPrevPage">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#" id = "switchNextPage">Next</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next" id = "switchLastPage">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="input-group mb-3"style = "width:30vw;padding-left:10px;">
+                <input id = "nameSearchDisplay" type="text" class="form-control" placeholder="Search names.">
+                <div class="input-group-append">
+                    <button class="input-group-text" id="btnSearchName" onclick = "gotoPage()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                      </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog" id = "alertDeleteSubject">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content emptyAlert">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Action.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                <div class="modal-body">
+                    <p id = "alertDeleteSubjectMessage">PLACEHOLDER_TEXT</p>
+                </div>
+                <div class="modal-footer">
+                    <button id ="btnConfirmDeleteSubject" type="button" class="btn btn-primary btn-lg" data-dismiss = "modal">Proceed</button>
+                    <button type="button" class="btn btn-warning btn-lg" data-dismiss = "modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--dialog box for section/exam panel deletion-->
+    <div class="modal" tabindex="-1" role="dialog" id = "alertDeleteSectionExam">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content emptyAlert">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Action.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                <div class="modal-body">
+                    <p id = "alertDeleteSectionExamMessage">PLACEHOLDER_TEXT</p>
+                </div>
+                <div class="modal-footer">
+                    <button id ="btnConfirmDeleteSectionExam" type="button" class="btn btn-primary btn-lg" data-dismiss = "modal">Proceed</button>
+                    <button type="button" class="btn btn-warning btn-lg" data-dismiss = "modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class = "scroller" id = "tableScroller">
+        <div>
+            <table class = "styled-table" style = "justify-content:center;" id = "tableRecords">
+                <form id = "formCheckedDelete" action = "/deleteRecords" method = "POST">
+                <thead>
+                    <tr>
+                        <th scope="col" width='10%'>Row</th>
+                        <th scope="col" width='70%'>Name</th>
+                        <th scope="col" width='15%'>Section</th>
+                        <th scope="col" width='5%'>Exam Code</th>
+                        <th scope="col" width='5%'>Score</th>
+                        <th scope="col" width='5%'>
+                        <div class = "centerdiv">
+                            <input type="checkbox" value="deleteVisible" id="checkDeleteAll">
+                        </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if database_length>0 %}
+                    {% for row in datarows %}    
+                        <tr id = "row_{{row.id}}">
+                            <td><div class='edit' style = "text-align:center;" data-id = "{{row.id}}">{{row.idx}}</div></td>
+                            <td> 
+                                <div class='edit'>
+                                    <input type='text' class='txtedit' style = "width: 300px;" value='{{row.name}}' id='name_{{row.id}}' data-field = "name" data-id = "{{row.id}}">
+                                </div> 
+                            </td>
+                            <td> 
+                                <div class='edit' style = "text-align: left;">
+                                    <input type='text' class='txtedit' value='{{row.section}}' id='section_{{row.id}}' data-field = "section" data-id = "{{row.id}}" >
+                                </div> 
+                            </td>
+                            <td> 
+                                <div class='edit'>
+                                    <input type='text' class='txtedit inputfield' value='{{row.exam_code}}' id='exam_code_{{row.id}}' data-field = "exam" data-id = "{{row.id}}">
+                                </div> 
+                            </td>
+                            <td> 
+                                <div class='edit'>
+                                    <input type='number' class='txtedit inputield' value='{{row.score}}' id='score_{{row.id}}' data-field = "score" data-id = "{{row.id}}">
+                                </div> 
+                            </td>
+                            <td>
+                                <div class = "centerdiv">
+                                    <input type="checkbox" name="{{row.id}}" value="{{row.id}}" id="checkDelete_{{row.id}}"
+                                    data-toggle = 'popover' title = "Confirm" data-content = "Delete this record.">
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td><span>&emsp;</span></td>
+                        <td><span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span></td>
+                        <td><span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span></td>
+                        <td><span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span></td>
+                        <td><span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span></td>
+                        <td><span>&emsp;</span></td>
+                    </tr>
+                {% endif %}      
+                </tbody>
+                </form>
+            </table>
+        </div>
+        <div style = "padding-bottom: 10px;">
+            <small style = "padding-left: 5px; color:#007bff;">
+                Showing
+                <u ><span id = "countShown">{{current_length}}</span></u>
+                of <span id = "countTotal">{{database_length}}</span>
+            </small>
+        </div>
+
+
+        <div class="modal" tabindex="-1" role="dialog" id = "alertDeleteRecord">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content emptyAlert">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm Action.</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    <div class="modal-body">
+                        <p id = "alertDeleteRecordMessage">Delete the marked records?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id ="btnConfirmDelete" type="button" class="btn btn-primary btn-lg" data-dismiss = "modal" onclick = "deleteSelected()">Proceed</button>
+                        <button type="button" class="btn btn-warning btn-lg" data-dismiss = "modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id = "dataAddedToast" class="toast fixed-bottom m-5 ms-auto" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <!--<img src="..." class="rounded mr-2" alt="...">-->
+                <strong id = "toastTitle" class="mr-auto">Data Added</strong>
+                <small id = "toastMuted" class="text-muted">Reload page to view changes.</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body" id = "toastMessage">
+                PLACEHOLDER_TEXT
+            </div>
+        </div>
+
+        <div class="modal" tabindex="-1" role="dialog" id = "alertUpdateRecord">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content emptyAlert">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Update Error</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    <div class="modal-body">
+                        <p id = "AlertUpdateRecordMessage">PLACEHOLDER_TEXT</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-lg" data-dismiss = "modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" tabindex="-1" role="dialog" id = "alertFilter">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content emptyAlert">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Invalid Filter</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    <div class="modal-body">
+                        <p id = "alertFilterMessage">PLACEHOLDER_TEXT</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-lg" data-dismiss = "modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" tabindex="-1" role="dialog" id = "alertAddSubject">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content emptyAlert">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Invalid Entries</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    <div class="modal-body">
+                        <p id = "alertAddSubjectMessage">PLACEHOLDER_TEXT</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-lg" data-dismiss = "modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" tabindex="-1" role="dialog" id = "fileDialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Select file to upload.</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Upload a file for bulk updating. Include only the relevant columns.
+                            <div>
+                                <table class="rwd-table">
+                                    <thead>
+                                    <th>name</th>
+                                    <th>section</th>
+                                    <th>exam_code</th>
+                                    <th>score</th>
+                                    </thead>
+                                    <tr>
+                                        <td><a style = "text-decoration: none;color:white;" href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ">Rick Astley</a></td>
+                                        <td>Section A</td>
+                                        <td>Q1</td>
+                                        <td>40</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jessica Smith</td>
+                                        <td>Section A</td>
+                                        <td>Q1</td>
+                                        <td>40</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <ul>
+                                <li>
+                                    <button class = "btn-rounded-blue"><span class = "bulletDesc">name</span></button>
+                                    <span class = "text-muted">- Complete name preferably in all caps.</span>
+                                </li>
+                                <li>
+                                    <button class = "btn-rounded-blue"><span class = "bulletDesc">section</span></button>
+                                    <span class = "text-muted">- Make sure that the sections are valid.</span>
+                                </li>
+                                <li>
+                                    <button class = "btn-rounded-blue"><span class = "bulletDesc">exam_code</span></button>
+                                    <span class = "text-muted">- Must be unique for every exam.</span>
+                                </li>
+                                <li>
+                                    <button class = "btn-rounded-blue"><span class = "bulletDesc">score</span></button>
+                                    <span class = "text-muted">- Must be numeric.</span>
+                                </li>
+                            </ul>
+                            <small class="text-muted" style = "font-style: italic;">String inputs must contain no extra spaces. The results will all be case sensitive.</small>
+                        </p>
+                        <input name = "file" id = "inputFile" type="file" style = "display: none;" accept = ".csv, .xls" id="file-input"/>
+                        <div class="input-group mb-3">
+                            <input id = "fileNameDisplay" type="text" class="form-control"
+                                    placeholder="Choose CSV or XLS File." aria-label="Choose CSV or XLS File."
+                                    aria-describedby="btnChooseFile"
+                                    readonly>
+                            <div class="input-group-append">
+                              <button type = "button" class="input-group-text" id="btnChooseFile">Choose File</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="progress-wrp">
+                        <div class="progress-bar"></div>
+                        <div class="status">0%</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id = "btnUploadFile" type="button" class="btn btn-primary btn-lg">Upload</button>
+                        <button type="button" class="btn btn-danger btn-lg" data-dismiss = "modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" tabindex="-1" role="dialog" id = "alertAddFromFile">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content emptyAlert">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id = "alertAddFromFileTitle">PLACEHOLDER_TITLE</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    <div class="modal-body" id = "alertAddFromFileBody">
+                        <p id = "alertAddFromFileMessage">PLACEHOLDER_MESSAGE</p>
+                        <div style = "max-height: 250px; overflow-y: auto; overflow-x: auto;" id = "alertAddFromFileTable">
+                            <table class="rwd-table">
+                                <thead>
+                                <th>name</th>
+                                <th>section</th>
+                                <th>exam_code</th>
+                                <th>score</th>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-lg" data-dismiss = "modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="addRecord" class="modal fade" style="color:#495057">  
+        <div class="modal-dialog">  
+            <!-- Modal content-->  
+            <div class="modal-content">  
+                <div class="modal-header add_record_header"> 
+                    <button type="button" class="close" data-dismiss="modal">×</button>&nbsp;&nbsp;
+                    <h4 class="modal-title">Add Record</h4>  
+                </div>  
+                <div class="modal-body">
+                    <small class="text-muted padBottom" style = "text-align:justify;">
+                        Do not leave missing entries. Avoid extra spaces and enter numeric data for scores.
+                        Entries are case sensitive and will be displayed separately in the dashboard.
+                    </small>
+                    <form action = "/addrecord" method = "POST" id = "formAddRecord"> 
+                        <div class = "padBottom">
+                            <label>Name</label>  
+                            <input type="text" name="name" id="entryName" class="form-control" onkeyUp = "showResults(this.value)" required/>
+                            <div id ="resultShow" class = "dropdown dropdown_div"></div>
+                        </div>
+                        <div class = "padBottom" style = "display:flex;justify-content: flex-start;flex-direction: column;">
+                            <label>Section</label>
+                            <div class="input-append btn-group">
+                                <input name = "section" class="span2 form-control" id="inputSection" size="40" type="text" required>
+                                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#" style = "color:white;">
+                                    <span class="caret"></span>
+                                </a>
+                                    <ul class="dropdown-menu" id = "listSections">
+                                        {% for sec in section_list %}
+                                            <div class = "indentlist"><li>{{sec}}</li></div>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                        </div>  
+                        <div class = "padBottom" style = "display:flex;justify-content: flex-start;flex-direction: column;">
+                            <label>Exam Code</label>
+                            <div class="input-append btn-group">
+                                <input name = "code" class="span2 form-control" id="inputCode" size="40" type="text" required>
+                                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#" style = "color:white;">
+                                    <span class="caret"></span>
+                                </a>
+                                
+                                    <ul class="dropdown-menu" id = "listCodes">
+                                        {% for code in exam_codes %}
+                                            <div class = "indentlist"><li>{{code}}</li></div>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                        </div>  
+                        <div class = "padBottom">
+                            <label>Score</label>
+                            <input 
+                                type="text"
+                                name="score"
+                                pattern = "(\d+\.?\d+)"
+                                id="entryScore"
+                                class="form-control"
+                                title="Enter numeric data only."
+                                required/>
+                        </div>
+                        <div style = "display:flex;justify-content: flex-end;">
+                            <!--type = button so form will not be submitted-->
+                            <button type="button" name="login_button" id="add_record_button" class="btn btn-primary" onclick="validateAddRecordForm()">Add</button>
+                        </div>
+                    </form>
+                </div>  
+            </div>  
+        </div>  
+    </div>
+
+    <div id="showViewCountModal" class="modal fade" style="color:#495057">  
+        <div class="modal-dialog"> 
+            <div class="modal-content">  
+                <div class="modal-header add_record_header"> 
+                    <button type="button" class="close" data-dismiss="modal">×</button>&nbsp;&nbsp;
+                    <h4 class="modal-title">View Count</h4>  
+                </div>  
+                <div class="modal-body">
+                    <div style = "padding-bottom:10px;">
+                        <small class="text-muted padBottom" style = "text-align:justify;">
+                            Number of times each class was accessed in the leaderboard.
+                        </small>
+                    </div>
+                    <div style = "overflow-y:auto; max-height: 400px;">
+                        <div class = "container">
+                            <div class = "row justify-content-md-center" style = "align-items:center;">
+                                <div class = "col-12 col-md-2"><b>No.</b></div>
+                                <div class = "col-12 col-md-6"><b>Subject</b></div>
+                                <div class = "col-12 col-md-2"><b>Views</b></div>
+                                <div class = "col-12 col-md-2"><b>Reset</b></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id ="view_body" style = "overflow-y:auto; max-height: 400px;">
+                    </div>
+                    <div style = "display:flex;justify-content: flex-end;margin: 10px 5px 5px 5px;">
+                        <button type="button" id="btnUpdateViewCount" class="btn btn-primary">
+                            <div style = "display: flex; align-items: center;column-gap: 10px;">
+                                <div>Refresh</div>
+                                <div id = "spinner_refresh_views" style = "transform: scale(0.5)">
+                                    <div class="spinner-border text-light" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>  
+        </div>  
+    </div>
+
+    <div id="deleteAccountModal" class="modal fade" style="color:#495057">  
+        <div class="modal-dialog">  
+            <div class="modal-content" style = "padding: 0 20px 0 20px;">  
+                <div class="modal-header add_record_header"> 
+                    <button type="button" class="close" data-dismiss="modal">×</button>&nbsp;&nbsp;
+                    <h4 class="modal-title">Delete Account</h4>  
+                </div>  
+                <div class="modal-body">
+                    <div style = "margin-bottom: 10px;">
+                        <small class="text-muted" style = "text-align:justify;">
+                            Account deletion will remove all entries associated with this profile. This process is irreversible. Please confirm this action by providing your password below.
+                        </small>
+                    </div>
+                    <div class = "card" style = "margin: 0 30px 0 30px;">
+                        <div style = "display:flex;flex-direction:column;margin: 5px 50px 20px 50px;">
+                            <label for = "pw_confirm_a">Enter your password:</label>
+                            <input id = "pw_confirm_a" type = "password">
+                            <label for = "pw_confirm_b">Confirm your password:</label>
+                            <input id = "pw_confirm_b" type = "password">
+                        </div>
+                    </div>
+                    <div style = "display:flex; justify-content:flex-end; margin: 10px 30px 0 0;">
+                        <button id = "btnConfirmDeleteAccount" type="button" class="btn btn-danger" disabled>Confirm</button>
+                    </div>
+                </div>  
+            </div>  
+        </div>  
+    </div>
+
+
+    <div class="modal" tabindex="-1" role="dialog" id = "alertAddRecord">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content emptyAlert">
+				<div class="modal-header">
+					<h5 class="modal-title">Data Error</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					</div>
+				<div class="modal-body">
+					<p id = "AlertAddRecordMessage">PLACEHOLDER_TEXT</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger btn-lg" data-dismiss = "modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    
+            </div><!--Second Column-->
+        </div><!--First Row-->
+    </div><!--Container-->
+<!--/section-->
+<script>
+    {% include 'admin.js' %}
+</script>
+</body>
+
+</html>

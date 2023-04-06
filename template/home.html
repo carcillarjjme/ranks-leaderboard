@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class = "title-container">
+	<div>
+		<a href = "https://codepen.io/johanmouchet">
+			<div class="cat"
+				data-toggle="tooltip"
+				data-html="true"
+				title='<span>
+							Animation by
+							<a style = "color: #007bff;">
+								Johan Mouchet
+							</a>
+						</span>'>
+
+				<div class="ear ear--left"></div>
+				<div class="ear ear--right"></div>
+				<div class="face">
+					<div class="eye eye--left">
+						<div class="eye-pupil"></div>
+					</div>
+					<div class="eye eye--right">
+						<div class="eye-pupil"></div>
+					</div>
+					<div class="muzzle"></div>
+				</div>
+			</div>
+		</a>
+	</div style = "display:flex;flex-direction:column;">
+		<div>
+			<span class = "main-title">\[\int \frac{\text{Can't Think}}{\text{of a Title}} dx\]</span>
+		</div>
+		<div>
+			<p class = "sub-title">Just kidding, it's for some dashboard or something. Try logging in,
+				<a style = "text-decoration: none;color:white;" href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+					what could go wrong ¯\_(ツ)_/¯ anyway?
+				</a>
+			</p>
+		</div>
+	</div>
+</div>
+<script>
+  $(".cat").tooltip({"placement":'top'});
+</script>
+{% endblock %}

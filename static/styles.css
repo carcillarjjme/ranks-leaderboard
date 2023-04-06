@@ -1,0 +1,507 @@
+
+.canvasWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-y:auto;
+}
+
+.indentlist {
+    margin-left: 10px;
+    white-space: nowrap;
+}
+
+.indentlist span {
+    margin-left:5px;
+    margin-right: 10px;
+    white-space: nowrap;
+}
+
+#filterlabel {
+    color: #000000;
+    font-weight: bold;;
+}
+
+.inputfield{
+    text-align: center;
+    margin: auto;
+}
+
+.centerdiv{
+    align-items: baseline;
+    justify-content: center;
+    display: flex;
+}
+
+hr {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.scroller{
+    display: flex;
+    align-items: stretch;
+    /*justify-content: center;*/
+    justify-content:flex-start;
+    overflow-y:auto;
+    max-height: 100vh;
+    resize:vertical;
+    flex-direction: column;
+}
+
+.addDataButtonClass{
+    display: flex;
+    justify-content: center;
+}
+
+
+.styled-table {
+    border-collapse:collapse;
+    margin: 5px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    table-layout: auto;
+}
+
+.styled-table thead tr {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.styled-table th{
+    position: sticky;
+    top: 0;
+    padding: 12px 15px;
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.styled-table th:first-of-type{
+    border-top-left-radius: 10px;
+}
+
+.styled-table th:last-of-type{
+    border-top-right-radius: 10px;
+}
+
+.styled-table td {
+    padding: 12px 15px;
+    color: black;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:nth-of-type(odd) {
+    background-color: white;
+}
+
+.styled-table tr:last-of-type {
+    border-bottom: 2px solid #007bff;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+.btn_close{
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.entryinput{
+    color: #007bff;
+    border-color: #007bff;
+    border-radius: 5px;
+    width: 50px;
+    text-align: center;
+    border-width: 1px;
+}
+
+.spandesc{
+    font-weight: bold;
+    color: #007bff;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.input-append .btn.dropdown-toggle {
+    float: none;
+}
+
+.dropdown_div {
+    position: absolute;
+    background-color: #ffffff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+.add_record_header {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: stretch;
+    justify-content: center;
+    align-content: flex-start;
+}
+
+.emptyAlert {
+    background-color: antiquewhite;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-scroll {
+    overflow-y: auto;
+    max-height: 20vh;
+}
+
+
+.btnContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.btnContainer button {
+    width: 110px;
+}
+
+.bulletDesc {
+    font-weight: bold;
+}
+
+.padBottom {
+    padding-bottom: 10px;
+}
+
+.centerPaginator {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.5em;
+    align-items: baseline;
+}
+
+#eyeSlash {
+    display:none;
+}
+
+#spanEye:active {
+    background-color:lightskyblue;
+}
+
+input[type="text"][name="username"]::-webkit-input-placeholder{
+    font-size: 0.9em;
+}
+
+input[type="password"][name="password"]::-webkit-input-placeholder{
+    font-size: 0.9em;
+}
+
+input[type="password"][name="cpassword"]::-webkit-input-placeholder{
+    font-size: 0.9em;
+}
+
+.btn-rounded-blue {
+    font-size: 13px;
+    color: rgba(58, 133, 191, 0.75);
+    letter-spacing: 1px;
+    line-height: 15px;
+    border: 2px solid rgba(58, 133, 191, 0.75);
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+  
+.btn-rounded-blue:hover {
+    color: #FFF;
+    background: rgba(58, 133, 191, 0.75);
+    border: 2px solid rgba(58, 133, 191, 0.75);
+}
+  
+
+.rwd-table {
+    width:100%;
+    table-layout: fixed;
+    margin: 1em 0;
+    background: #34495E;
+    color: #fff;
+    border-radius: .4em;
+    overflow: hidden;
+}
+
+.rwd-table thead {
+    /*Make top row stay.*/
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    color: white;
+    border-color: lighten(#34495E, 10%);
+    text-align: center;
+}
+
+.rwd-table tr {
+    text-align: center;
+    vertical-align: baseline;
+}
+    
+.rwd-table th {
+    color: white;
+    margin: .5em 1em;
+    text-align: center;
+    font-weight: bold;
+}
+    
+.rwd-table td {
+    margin: .5em 1em;
+    font-size: 0.8em;
+    background-color:#007bff;
+    border-color: lighten(#34495E, 10%);
+    text-align: center;
+    justify-content: center;
+}
+
+.rwd-table td:first-child {
+        padding-top: .5em;
+}
+.rwd-table td:last-child {
+        padding-bottom: .5em;
+}
+  
+#pageSwitcher {
+    color: #495057;
+}
+
+.modal-title, .modal-body, .toast-body {
+    color: #495057;
+}
+
+
+.text-glow {
+    text-shadow:1px 1px 10px #fddb9b, 1px 1px 10px #ffffff;
+    font-size: 24pt;
+  }
+
+.stick-left {
+    position: absolute;
+    z-index: 1;
+    padding: 25px 25px;
+}
+
+.navbar-item .has-dropdown:hover{
+    background-color: black;
+}
+
+.hero.is-link .navbar-menu {
+    background-color: black;
+}
+
+
+#progress-wrp {
+    border: 1px solid #363636;
+    padding: 1px;
+    position: relative;
+    height: 30px;
+    border-radius: 5px;
+    margin: 10px;
+    text-align: center;
+    background: #fff;
+    box-shadow: inset 1px 3px 6px rgba(0, 0, 0, 0.12);
+  }
+  
+  #progress-wrp .progress-bar {
+    height: 100%;
+    border-radius: 5px;
+    background-color: #007bff;
+    width: 0;
+    box-shadow: inset 1px 1px 10px rgba(0, 0, 0, 0.11);
+  }
+  
+  #progress-wrp .status {
+    top: 3px;
+    left: 50%;
+    position: absolute;
+    display: inline-block;
+    color: #000000;
+  }
+
+  .bd-snippet {
+    --snippet-spacing: 1.5rem;
+    font-size: 1rem;
+    grid-gap: calc(2 * var(--snippet-spacing));
+    position: relative;
+    background-color: white;
+    color: #363636;
+    display:flex;
+}
+
+#divPanel {
+    padding-top: 1.5em;
+}
+
+
+.subjects-scroll {
+    overflow-y: auto;
+    max-height:600px;
+    padding-top: 5px;
+    padding-bottom:5px;
+}
+
+.section_exam_container {
+    padding-bottom: 5px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 3px solid rgba(0, 123, 255,1);
+    border: 1px solid black;
+}
+
+#tableScroller::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+#tableScroller::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px #49505761;
+    box-shadow: inset 0 0 6px #49505761;
+    border-radius: 10px;
+}
+
+#tableScroller::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color:#3e434974;
+    -webkit-box-shadow: inset 0 0 6px #495057;
+    box-shadow: inset 0 0 6px #495057;
+}
+
+
+
+.subjects-scroll::-webkit-scrollbar {
+    width: 8px;
+    height:8px;
+}
+
+.subjects-scroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px #4950576b;
+    box-shadow: inset 0 0 6px #4950576b;
+    border-radius: 10px;
+}
+
+.subjects-scroll::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color:#3e434974;
+    -webkit-box-shadow: inset 0 0 6px #495057;
+    box-shadow: inset 0 0 6px #495057;
+}
+
+.teacherNameField {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    column-gap: 5px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.addSubjectField {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    column-gap: 5px;
+    padding-left: 5px;
+    padding-right:5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+
+.titleWithBg {
+    background-color: #ffffff;
+    border-radius: 6px 6px 0 0;
+    color: #363636;
+    font-size: 1.25em;
+    font-weight: 700;
+    line-height: 1;
+    padding: 0.2em 0.2em;
+}
+
+
+/*Forces body to occupy full width. The previous
+case cuts off at the end of the navbar collapse
+thus leaving an empty padding in the right side
+for some screen sizes*/
+body {
+    min-width: fit-content;
+}
+
+/*hide scroll wheels in the score fields to enfore
+registering changes via keydown events*/
+input[data-field="score"]::-webkit-outer-spin-button, 
+input[data-field="score"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[data-field="score"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.addSectionField {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    column-gap: 5px;
+    padding-left: 5px;
+    padding-right:5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #fff;
+}
+
+/*Smaller placeholder so example fits*/
+#panelScroller input[data-field="school_year"]::placeholder {
+    font-size:66%;
+}
+
+/*show whole subject name*/
+#panelScroller input[data-field="subject_name"] {
+    overflow: visible;
+    width: auto;
+}
+
+.views-row {
+    display:flex;
+    justify-content:space-evenly;
+}
+
+.views-reset {
+    transform: scale(0.8);
+}
+
+.refresh-spinner {
+    margin-right:10px;
+}

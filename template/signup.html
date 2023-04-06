@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Sign Up</h3>
+    <div class="box">
+        <!--form id = "formSignUp" method="POST" action="/signup"-->
+            <div id = "divResponse" class="field"></div>
+            <div class="field">
+                <div class="control">
+                    <input id = "inputUserName" class="form-control" type="text" name="username" autofocus = "" placeholder="Username (at least 4 characters)"  data-toggle="tooltip">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input id = "inputDisplayName" class="form-control" type="text" name="displayname" autofocus = "" placeholder="Name to display in dashboard"  data-toggle="tooltip">
+                </div>
+            </div>
+            <div class = "control" style = "padding-bottom:10px;">
+                <small class = "text-muted" style = "text-justify: left;font-size:0.75em" >
+                    Password should contain 
+                    <span id = "spanCharacters">
+                        alteast twelve (12) characters
+                    </span> with 
+                    <span id = "spanNumber">
+                        at least one (1) number.
+                    </span> Use of 
+                    <span id = "spanLowerUpper">
+                        lower and/or upper case letters
+                    </span> is suggested.
+                </small>
+            </div>
+            <div class="input-group w-100 field">
+                <input id = "inputPassword" type="password" pattern = "(?=.*\d)(?=.*[a-z]).{12,}" name = "password" class="form-control" placeholder="Enter Password">
+                <span  id = "spanEye" class="input-group-text" id="basic-addon1">
+                    <svg id = "eyeNormal" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <svg id = "eyeSlash" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+                        <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+                        <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+                        <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/>
+                    </svg>
+                </span>
+            </div>
+
+            <div class="field">
+                    <input id = "inputConfirmPassword" class="form-control" style = "color:#495057;" type="password" name="cpassword" placeholder="Confirm Password">
+                </div>
+            </div>
+
+            <button id = "btnSignUp" class="button is-block is-info is-fullwidth">Sign Up</button>
+        <!--/form-->
+    </div>
+</div>
+<script>
+    var showPasswordTimer;
+    const showPasswordTimeout = 2000;
+    $("#spanEye").mousedown(function(event){
+        event.preventDefault();
+        clearTimeout(showPasswordTimer);
+        $("#eyeNormal").hide();
+        $("#eyeSlash").show();
+        $("#inputPassword").prop("type","text");
+    });
+
+    
+    $("#spanEye").mouseup(function(event){
+        event.preventDefault();
+        clearTimeout(showPasswordTimer);
+        showPasswordTimer = setTimeout(function(){
+            $("#eyeNormal").show();
+            $("#eyeSlash").hide();
+            $("#inputPassword").prop("type","password");
+        },showPasswordTimeout);
+    })
+
+    function validatePassword(pw){
+        var length_req = false;
+        var number_req = false;
+        var letter_req = false;
+        const numbers = /[0-9]/g;
+        const lower = /[a-z]/g;
+        const upper = /[A-Z]/g;
+
+        if (pw.length>=12){
+            length_req = true;
+        }
+        if(pw.match(lower) || pw.match(upper)){
+            letter_req = true;
+        } 
+        if (pw.match(numbers)){
+            number_req = true;
+        }
+        return (length_req && number_req && letter_req)
+    }
+
+    function confirmPassword(copy,pw){
+        if ((copy ==pw) && validatePassword(pw)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    $("#inputUserName").on("keyup",function(event){
+        var username = $("#inputUserName")[0].value;
+        if (username.length>=4){
+            $("#inputUserName").css("color","#28a745");
+        } else {
+            $("#inputUserName").css("color", "#6c757d");
+        }
+
+    });
+
+    $("#inputDisplayName").on("keyup",function(event){
+        var username = $("#inputDisplayName")[0].value;
+        if (username.length>=4){
+            $("#inputDisplayName").css("color","#28a745");
+        } else {
+            $("#inputDisplayName").css("color", "#6c757d");
+        }
+    });
+
+    $("#inputPassword").on("keyup",function(event){
+        var pw = $("#inputPassword")[0].value;
+        if (pw.length>=12){
+            $("#spanCharacters").css("color","#28a745");
+        } else {
+            $("#spanCharacters").css("color", "#6c757d");
+        }
+
+        const numbers = /[0-9]/g;
+        const lower = /[a-z]/g;
+        const upper = /[A-Z]/g;
+
+        if(pw.match(lower) || pw.match(upper)){
+            $("#spanLowerUpper").css("color","#28a745");
+        } else {
+            $("#spanLowerUpper").css("color", "#6c757d");
+        }
+
+        if (pw.match(numbers)){
+            $("#spanNumber").css("color","#28a745");
+        } else {
+            $("#spanNumber").css("color", "#6c757d");
+        }
+    });
+        
+    $("#inputConfirmPassword").on("keyup",function(event){
+        const confirm_pw = $("#inputConfirmPassword")[0].value;
+        const pw = $("#inputPassword")[0].value;
+        if ((confirm_pw==pw) && validatePassword(pw)){
+            $("#inputConfirmPassword").css("background-color","rgb(0 246 91 / 66%)");
+        } else {
+            $("#inputConfirmPassword").css("background-color", "white");
+        }
+
+    });
+
+    $("#btnSignUp").on("click",function(event){
+        const confirm_pw = $("#inputConfirmPassword")[0].value;
+        const pw = $("#inputPassword")[0].value;
+        const username = $("#inputUserName")[0].value;
+        const displayname = $("#inputDisplayName")[0].value;
+
+        var validUserName = false;
+        var validDisplayName = false;
+        if (username.length>=4){
+            validUserName = true;
+        }
+        if (displayname.length >= 4){
+            validDisplayName = true;
+        }
+
+        isConfirmed = confirmPassword(confirm_pw,pw);
+        if (isConfirmed && validUserName && validDisplayName){
+            $.ajax({
+                type : 'POST',
+                url : "{{url_for('signup')}}",
+                contentType: 'application/json;charset=UTF-8',
+                data : JSON.stringify({username:username,password:pw,displayname:displayname}),
+                success : function(response){
+                    console.log(response);
+                    isExist = response["isExist"]
+                    if (isExist){
+                        $("#divResponse").html('<div id = "notif" class = "notification is-danger">\
+                                                    <a id = "close" class="delete"></a>\
+                                                    <small id = "spanResponse" style = "color:white;">\
+                                                        Username already exists. <a href = "{{url_for("login")}}">Login</a> instead?\
+                                                    </small>\
+                                                </div>');
+                        //$("#spanResponse").css("color", "#ff101087")
+                    } else {
+                        $("#divResponse").html('<div id = "notif"  class = "notification is-success">\
+                                <a id = "close" class="delete"></a>\
+                                <small id = "spanResponse">User successfully registered. Redirecting...</small>\
+                                <div class="spinner-grow spinner-grow-sm" role="status">\
+                                    <span class="sr-only">Redirecting...</span>\
+                                </div>\
+                            </div>');
+                        setTimeout(function(){
+                            window.location.href = "{{url_for('admin')}}";
+                        },2000);
+                        //$("#spanResponse").css("color", "#28a745")
+                    }
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            });
+
+        } else {
+            $("#divResponse").html('<div id = "notif"  class = "notification is-warning is-light">\
+                                <a id = "close" class="delete"></a>\
+                                <small id = "spanResponse">Invalid username, name or password.</small>\
+                            </div>');
+        }
+    });
+
+    $("#divResponse").on("click","#close",function(event){
+        $("#notif").hide();
+    });
+        
+    $(document).ready(function(){
+        $('input[type=text][name=username]').tooltip({placement: "right", trigger: "focus"});
+    });
+</script>
+{% endblock %}
